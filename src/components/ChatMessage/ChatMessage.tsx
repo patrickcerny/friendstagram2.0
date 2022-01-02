@@ -1,7 +1,12 @@
 import './ChatMessage.scss';
 import { ChatMessage as ChatMessageProps } from '../../utils/models/chatmessage.model';
+import { useEffect } from 'react';
 
 const ChatMessage = (props: ChatMessageProps) => {
+  useEffect(() => {
+    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+    return () => {};
+  }, []);
   return (
     <div className="chatmessage-main">
       <div className="chatmessage-main__info">

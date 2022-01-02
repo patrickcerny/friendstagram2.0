@@ -1,7 +1,7 @@
 import './Chat.scss';
 import InputBar from '../../components/InputBar/InputBar';
 import checkAuthenticated from '../../utils/functions/checkAuthenticated.function';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { ChatMessage as ChatMessageModel } from '../../utils/models/chatmessage.model';
 import ChatMessage from '../../components/ChatMessage/ChatMessage';
 
@@ -13,6 +13,7 @@ const user = {
 
 const Chat = () => {
   checkAuthenticated();
+  const chatWindowRef = useRef<HTMLDivElement>(document.createElement('div'));
   const [messages, setMessages] = useState<ChatMessageModel[]>([
     {
       content:
@@ -57,8 +58,9 @@ const Chat = () => {
       },
     ]);
   };
+
   return (
-    <div className="main-chat">
+    <div className="main-chat" ref={chatWindowRef}>
       {messages.map((message) => {
         return (
           <ChatMessage

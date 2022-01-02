@@ -1,0 +1,32 @@
+@import '../../style/variables';
+.main-commentpost {
+  width: 100vw;
+  max-width: 100%;
+  padding: 10px 0;
+  border-bottom: $mainBorder;
+  &__info {
+    display: flex;
+    align-items: center;
+
+    &__image {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-left: 10px;
+    }
+    &__username {
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    &__date {
+      margin-left: auto;
+      font-size: 0.8em;
+      margin-right: 10px;
+    }
+  }
+  &__content {
+    display: block;
+    padding: 5px 0;
+    margin: 20px 0 0 10px;
+  }
+}

@@ -49,7 +49,7 @@ const NavBar = (props: NavBarProps) => {
           className="navBar__logo-container"
           style={mobile ? { padding: '20px 0' } : {}}
         >
-          Friendstagram
+          <Link to="/">Friendstagram</Link>
         </div>
 
         <ul className="navBar__item-container">
