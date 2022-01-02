@@ -4,7 +4,8 @@
   position: fixed;
   bottom: 0;
   width: 100vw;
-
+  background-color: white;
+  max-width: 100%;
   display: flex;
   align-items: center;
   border-top: $mainBorder;

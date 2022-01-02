@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import AnimateHeight from 'react-animate-height';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './NavBar.scss';
 interface NavBarProps {}
 
@@ -8,7 +8,6 @@ const NavBar = (props: NavBarProps) => {
   const [mobile, setMobile] = useState(window.innerWidth < 768);
   const [burgerClicked, setBurgerClicked] = useState(false);
 
-  const [scrolled, setScrolled] = useState(0);
   const handleBurgerClick = () => {
     setBurgerClicked(!burgerClicked);
   };
@@ -20,14 +19,6 @@ const NavBar = (props: NavBarProps) => {
     window.addEventListener('resize', () => {
       if (window.innerWidth > 768) setMobile(false);
       else if (window.innerWidth < 768) setMobile(true);
-    });
-    window.addEventListener('scroll', () => {
-      var winScroll =
-        document.body.scrollTop || document.documentElement.scrollTop;
-      var height =
-        document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
-      setScrolled((winScroll / height) * 100);
     });
 
     return () => {
@@ -120,7 +111,6 @@ const NavBar = (props: NavBarProps) => {
           </AnimateHeight>
         ) : null}
       </div>
-      <div className="scrollIndicator" style={{ width: scrolled + '%' }}></div>
     </nav>
   );
 };

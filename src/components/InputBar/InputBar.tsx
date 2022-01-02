@@ -1,6 +1,7 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import User from '../../utils/models/user.model';
 import './InputBar.scss';
+
 interface InputBarProps {
   onSend: (message: string) => void;
   user: User;

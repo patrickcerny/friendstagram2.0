@@ -1,5 +1,5 @@
 import User from './user.model';
-interface Comment {
+export interface Comment {
   id_comment?: number;
   id_post?: number;
   id_user?: number;
@@ -7,5 +7,3 @@ interface Comment {
   created_at: string;
   user: User;
 }
-
-export default Comment;

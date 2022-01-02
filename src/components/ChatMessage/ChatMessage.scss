@@ -1,0 +1,30 @@
+@import '../../style/variables';
+.chatmessage-main {
+  display: flex;
+  flex-direction: column;
+  background-color: $secondairyColor;
+  max-width: 300px;
+  margin: 10px;
+  border-radius: $borderRadius;
+  padding: 10px 10px 20px 10px;
+
+  &__info {
+    display: flex;
+    &__sender {
+      font-weight: bold;
+    }
+    img {
+      width: 20px;
+      height: 20px;
+      border-radius: 100%;
+      margin: 0 10px;
+    }
+    &__date {
+      margin-left: auto;
+      font-size: 0.8em;
+    }
+  }
+  &__content {
+    margin: 10px 0 0 10px;
+  }
+}
