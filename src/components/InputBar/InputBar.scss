@@ -1,4 +1,5 @@
 @import '../../style/variables';
+@import '../../style/classes';
 .main-inputbar {
   position: fixed;
   bottom: 0;
@@ -18,6 +19,7 @@
     resize: none;
     margin: 10px 10px;
     font-family: Raleway;
+    font-size: 1em;
   }
   button {
     width: 120px;
