@@ -1,0 +1,92 @@
+@import '../../style/variables.scss';
+
+.post-main {
+  width: clamp(340px, 50vw, 480px);
+  height: clamp(600px, 130vw, 900px);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 7px auto;
+  border: $mainBorder;
+  border-radius: $borderRadius;
+  overflow: hidden;
+  box-shadow: $mainShadow;
+
+  &__header {
+    height: 10%;
+    background-color: $lightGray;
+    width: 100%;
+    border-bottom: $mainBorder;
+    display: flex;
+    align-items: center;
+
+    img {
+      height: 70%;
+      border-radius: 100%;
+      margin-left: 10px;
+    }
+    &__username {
+      margin-left: 10px;
+      font-weight: bold;
+    }
+    &__date {
+      margin-left: auto;
+      font-size: 0.8em;
+      margin-right: 10px;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    padding: 5px 0;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+  &__footer {
+    padding-top: 20px;
+    border-top: $mainBorder;
+    width: 100%;
+    margin-top: auto;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+
+    &__heading {
+      padding-left: 20px;
+    }
+    &__description {
+      font-size: 0.7em;
+      padding: 10px 10px;
+
+      padding-left: 20px;
+    }
+    &__comment {
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      padding-left: 20px;
+      padding: 20px 0;
+      span {
+        font-size: 0.7em;
+        margin: 0 0 0 20px;
+      }
+      &__username {
+        font-weight: bold;
+      }
+      &__content {
+        padding-left: 10px;
+      }
+      &__date {
+        font-size: 0.7em;
+        margin-left: auto;
+        margin-right: 30px;
+      }
+    }
+  }
+}

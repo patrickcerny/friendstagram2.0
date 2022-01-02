@@ -1,0 +1,26 @@
+@import '../../style/variables';
+.main-inputbar {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+
+  display: flex;
+  align-items: center;
+  border-top: $mainBorder;
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    margin: 0 10px;
+  }
+  textarea {
+    width: 100%;
+    resize: none;
+    margin: 10px 10px;
+    font-family: Raleway;
+  }
+  button {
+    width: 120px;
+    margin: 0 10px;
+  }
+}
