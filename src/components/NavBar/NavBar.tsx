@@ -39,7 +39,7 @@ const NavBar = (props: NavBarProps) => {
               </li>
               <li className="navBar__item-container__item underline--hover">
                 <Link to="/upload" onClick={handleLinkClick}>
-                  Hochloaden
+                  Hochladen
                 </Link>
               </li>
             </>

@@ -8,6 +8,7 @@ import Header from './components/NavBar/NavBar';
 //pages
 import Loading from './Pages/Loading/Loading';
 import Error from './Pages/Error/Error';
+import Background from './components/Background/Background';
 const Home = lazy(() => import('./Pages/Home/Home'));
 const LogIn = lazy(() => import('./Pages/LogIn/LogIn'));
 const SignUp = lazy(() => import('./Pages/SignUp/SignUp'));
@@ -20,7 +21,12 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Header></Header>
+        {window.location.pathname.toLowerCase() == '/login' ||
+        window.location.pathname.toLowerCase() == '/signup' ? (
+          <Background />
+        ) : (
+          <Header></Header>
+        )}
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<Home />}></Route>

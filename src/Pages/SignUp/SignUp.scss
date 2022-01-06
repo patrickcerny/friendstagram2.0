@@ -1,0 +1,51 @@
+@import '../../style/classes';
+@import '../../style/variables';
+.main-signup {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: white;
+    border-radius: $borderRadius;
+    padding: 30px;
+
+    h1 {
+      text-align: center;
+    }
+    label {
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    input {
+      margin-bottom: 30px;
+      margin-top: 5px;
+      font-family: Raleway;
+      width: 200px;
+      padding: 8px 3px;
+      resize: none;
+      border: none;
+      border-radius: $borderRadius;
+      outline: 1px solid black;
+      &:focus {
+        outline: 2px solid $mainColor;
+      }
+    }
+    span {
+      transition: all 0.3s ease-in-out;
+      color: red;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+  }
+  button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+  }
+}

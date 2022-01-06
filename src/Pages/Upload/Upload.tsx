@@ -13,7 +13,7 @@ const Upload = () => {
       <h1>Lade jetzt dein Friendstagram-Moment hoch!</h1>
 
       <div className="main-upload__image-container">
-        <label>
+        <label className="file_upload">
           Wähle deine Datei aus!
           <input type="file" accept="image/* " onChange={onUpload} />
         </label>

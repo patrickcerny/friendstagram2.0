@@ -1,0 +1,44 @@
+@import '../../style/classes';
+@import '../../style/variables';
+
+.main-settings {
+  margin-top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: $mainBorder;
+    padding: 30px 40px;
+    min-width: 300px;
+    max-width: 100%;
+    justify-content: space-evenly;
+    min-height: 200px;
+  }
+
+  &__invitation {
+    &__heading {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+  }
+  &__user {
+    height: 300px;
+    label {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+  }
+  &__logout {
+    min-height: 100px !important;
+    button {
+      background-color: red;
+    }
+  }
+}
