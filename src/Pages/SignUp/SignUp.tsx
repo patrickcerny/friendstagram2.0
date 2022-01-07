@@ -18,7 +18,8 @@ const SignUp = () => {
     axios.post('');
   };
 
-  const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  const emailRegex =
+    /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
   const onGroupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGroupCode(e.target.value.toUpperCase());
     setButtonDisabled(
