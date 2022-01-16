@@ -1,13 +1,32 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Upload.scss';
+import ReactPlayer from 'react-player';
+import { isImage, isVideo } from '../../utils/functions/isFileType.function';
+import { checkToken } from '../../utils/functions/checkToken.function';
+import { useNavigate } from 'react-router-dom';
 const Upload = () => {
-  const [image, setImage] = useState(
+  const navigate = useNavigate();
+
+  const [file, setFile] = useState(
     'https://www.bastiaanmulder.nl/wp-content/uploads/2013/11/dummy-image-square.jpg'
   );
+  const [fileIsImage, setFileIsImage] = useState(true);
 
   const onUpload = (e: any) => {
-    setImage(URL.createObjectURL(e.target.files[0]));
+    if (isImage(e.target.files[0].name)) {
+      setFile(URL.createObjectURL(e.target.files[0]));
+      setFileIsImage(true);
+    } else if (isVideo(e.target.files[0].name)) {
+      setFile(URL.createObjectURL(e.target.files[0]));
+      setFileIsImage(false);
+    }
   };
+
+  useEffect(() => {
+    if (!checkToken()) navigate('/logIn');
+
+    return () => {};
+  }, []);
   return (
     <div className="main-upload">
       <h1>Lade jetzt dein Friendstagram-Moment hoch!</h1>
@@ -15,10 +34,13 @@ const Upload = () => {
       <div className="main-upload__image-container">
         <label className="file_upload">
           Wähle deine Datei aus!
-          <input type="file" accept="image/* " onChange={onUpload} />
+          <input type="file" accept="image/*, video/*" onChange={onUpload} />
         </label>
-
-        <img src={image} alt="dummy image" />
+        {fileIsImage ? (
+          <img src={file} alt="dummy image" />
+        ) : (
+          <ReactPlayer url={file} controls />
+        )}
       </div>
       <div className="main-upload__heading-container input_container">
         <label htmlFor="heading_input">Deine Überschrift</label>

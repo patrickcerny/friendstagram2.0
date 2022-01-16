@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router';
 import ErrorGif from '../../assets/img/error.gif';
 import ConfusedGif from '../../assets/img/confused.gif';
 import './Error.scss';
+import { checkToken } from '../../utils/functions/checkToken.function';
 
 function useQuery() {
   const { search } = useLocation();
@@ -12,6 +13,7 @@ function useQuery() {
 
 const ErrorPage = () => {
   const navigate = useNavigate();
+
   const [errorPic, setErrorPic] = useState<any>(ErrorGif);
   const query = useQuery();
   const errorCode = query.get('code') ? query.get('code') : '404';
@@ -21,6 +23,8 @@ const ErrorPage = () => {
       : 'Da ist was falsch gelaufen! Falls dieser Fehler häufiger auftritt, bitte melde dich bei uns oder versuche es später erneut!';
   useEffect(() => {
     if (errorCode === '404') setErrorPic(ConfusedGif);
+
+    if (!checkToken()) navigate('/logIn');
 
     return () => {};
   }, [errorCode]);

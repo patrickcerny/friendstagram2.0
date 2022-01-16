@@ -1,9 +1,10 @@
 import './Chat.scss';
 import InputBar from '../../components/InputBar/InputBar';
-import checkAuthenticated from '../../utils/functions/checkAuthenticated.function';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ChatMessage as ChatMessageModel } from '../../utils/models/chatmessage.model';
 import ChatMessage from '../../components/ChatMessage/ChatMessage';
+import { checkToken } from '../../utils/functions/checkToken.function';
+import { useNavigate } from 'react-router-dom';
 
 const user = {
   profile_picture: 'https://picsum.photos/200',
@@ -12,7 +13,8 @@ const user = {
 };
 
 const Chat = () => {
-  checkAuthenticated();
+  const navigate = useNavigate();
+
   const chatWindowRef = useRef<HTMLDivElement>(document.createElement('div'));
   const [messages, setMessages] = useState<ChatMessageModel[]>([
     {
@@ -58,12 +60,16 @@ const Chat = () => {
       },
     ]);
   };
-
+  useEffect(() => {
+    if (!checkToken()) navigate('/logIn');
+    return () => {};
+  }, []);
   return (
     <div className="main-chat" ref={chatWindowRef}>
-      {messages.map((message) => {
+      {messages.map((message, key) => {
         return (
           <ChatMessage
+            key={key}
             created_at={message.created_at}
             content={message.content}
             sender={message.sender}

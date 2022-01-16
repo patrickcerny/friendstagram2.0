@@ -7,6 +7,7 @@ interface NavBarProps {}
 const NavBar = (props: NavBarProps) => {
   const [mobile, setMobile] = useState(window.innerWidth < 768);
   const [burgerClicked, setBurgerClicked] = useState(false);
+  const [display, setDisplay] = useState(true);
 
   const handleBurgerClick = () => {
     setBurgerClicked(!burgerClicked);
@@ -20,14 +21,24 @@ const NavBar = (props: NavBarProps) => {
       if (window.innerWidth > 768) setMobile(false);
       else if (window.innerWidth < 768) setMobile(true);
     });
-
+    if (
+      window.location.pathname.toLowerCase() == '/login' ||
+      window.location.pathname.toLowerCase() == '/signup'
+    )
+      setDisplay(false);
     return () => {
       window.removeEventListener('resize', () => {});
       window.removeEventListener('scroll', () => {});
     };
   }, []);
+
   return (
-    <nav className="nav_container" style={mobile ? {} : { height: '100px' }}>
+    <nav
+      className="nav_container"
+      style={
+        display ? (mobile ? {} : { height: '100px' }) : { display: 'none' }
+      }
+    >
       <div className="navBar">
         <ul className="navBar__item-container">
           {mobile ? null : (

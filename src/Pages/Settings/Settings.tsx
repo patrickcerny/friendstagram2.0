@@ -1,5 +1,13 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { checkToken } from '../../utils/functions/checkToken.function';
 import './Settings.scss';
 const Settings = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!checkToken()) navigate('/logIn');
+    return () => {};
+  }, []);
   return (
     <div className="main-settings">
       <h1>Einstellungen</h1>
@@ -22,9 +30,10 @@ const Settings = () => {
           Username speichern
         </button>
 
-        <div className="main-upload__image-container">
-          <label className=" main-upload__image-container__file_upload file_upload">
+        <div className="main-settings__image-container">
+          <label className=" main-settings__image-container__file_upload file_upload">
             Wähle deine Datei aus!
+            <input type={'file'} accept="image/* " />
           </label>
         </div>
         <button className="main-settings__user__file_upload-submit main-button">

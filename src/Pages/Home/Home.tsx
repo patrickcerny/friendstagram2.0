@@ -1,4 +1,6 @@
+import { useNavigate } from 'react-router-dom';
 import Post from '../../components/Post/Post';
+import { checkToken } from '../../utils/functions/checkToken.function';
 import { Post as PostModel } from '../../utils/models/post.model';
 import './Home.scss';
 
@@ -9,7 +11,7 @@ const posts: PostModel[] = [
     heading: 'Mein erster Post',
     description:
       'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,lorem ipsum dolor sit amet consectetur adipisicing elit.',
-    image_small: 'https://picsum.photos/200/300',
+    file: 'https://cdn.discordapp.com/attachments/820768351731056660/923305372419244132/v09044g40000c6vhhhrc77u0pq8c2pq0.mp4',
     comments: [
       {
         comment: 'Comment 1',
@@ -42,7 +44,7 @@ const posts: PostModel[] = [
     heading: 'Mein erster Post',
     description:
       'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,lorem ipsum dolor sit amet consectetur adipisicing elit.',
-    image_small: 'https://picsum.photos/200/300',
+    file: 'https://www.bastiaanmulder.nl/wp-content/uploads/2013/11/dummy-image-square.jpg',
     comments: [
       {
         comment: 'Comment 1',
@@ -75,7 +77,7 @@ const posts: PostModel[] = [
     heading: 'Mein erster Post',
     description:
       'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,lorem ipsum dolor sit amet consectetur adipisicing elit.',
-    image_small: 'https://picsum.photos/200/300',
+    file: 'https://www.bastiaanmulder.nl/wp-content/uploads/2013/11/dummy-image-square.jpg',
     comments: [
       {
         comment: 'Comment 1',
@@ -105,6 +107,9 @@ const posts: PostModel[] = [
 ];
 
 const Home = () => {
+  const navigate = useNavigate();
+  if (!checkToken()) navigate('/logIn');
+
   return (
     <div className="main_home">
       {posts.map((post, index) => {
@@ -117,7 +122,7 @@ const Home = () => {
             comments={post.comments}
             description={post.description}
             heading={post.heading}
-            image_small={post.image_small}
+            file={post.file}
           />
         );
       })}

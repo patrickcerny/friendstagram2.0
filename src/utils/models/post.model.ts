@@ -6,8 +6,7 @@ export interface Post {
   heading: string;
   description: string;
   created_at: string;
-  image_small: string;
-  image?: string;
+  file: string;
   comments: Comment[];
   posted_by: User;
 }

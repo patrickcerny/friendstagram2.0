@@ -1,8 +1,11 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import axios, { AxiosRequestConfig } from 'axios';
+import { useEffect, useRef, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import './SignUp.scss';
 
 const SignUp = () => {
+  const groupCodeInput = useRef(null as any);
+
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [groupCode, setGroupCode] = useState('');
@@ -10,12 +13,46 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleSubmit = async () => {
     setErrorMessage('');
     setButtonDisabled(true);
 
-    //TODO add user posting
-    axios.post('');
+    const data = {
+      groupCode,
+      username,
+      email,
+      password,
+    };
+
+    //register user
+    try {
+      const returnedUser = await axios.post(
+        process.env.REACT_APP_API_URL + '/User',
+        data
+      );
+      console.log(returnedUser);
+    } catch (error) {
+      console.log(error);
+      return setErrorMessage(error + '');
+    }
+
+    //get token
+    try {
+      const authenticationUser = await axios.post(
+        process.env.REACT_APP_API_URL + '/User/authenticate',
+        data
+      );
+      const token = authenticationUser.data.token;
+      localStorage.setItem('token', token);
+      axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+    } catch (error) {
+      console.log(error);
+      return setErrorMessage(error + '');
+    }
+
+    window.location.reload();
   };
 
   const emailRegex =
@@ -66,6 +103,13 @@ const SignUp = () => {
   };
 
   useEffect(() => {
+    if (searchParams.get('groupCode')) {
+      const groupCode = searchParams.get('groupCode') + '';
+      if (groupCode.length < 16) return;
+      if (groupCode.length > 16)
+        return setGroupCode(groupCode.substring(0, 16));
+      setGroupCode(groupCode);
+    }
     return () => {};
   }, []);
   return (
@@ -77,17 +121,18 @@ const SignUp = () => {
           type="text"
           id="group-code"
           className="main-input"
-          placeholder="Gruppencode eingeben"
+          placeholder="0123456789ABCDEF"
           value={groupCode}
           onChange={(e) => onGroupChange(e)}
           maxLength={16}
+          ref={groupCodeInput}
         />
         <label htmlFor="username">Benutzername</label>
         <input
           type="text"
           id="username"
           className="main-input"
-          placeholder="Username"
+          placeholder="max-mustermann"
           value={username}
           onChange={(e) => onUsernameChange(e)}
         />
@@ -96,7 +141,7 @@ const SignUp = () => {
           type="email"
           id="email"
           className="main-input"
-          placeholder="E-Mail"
+          placeholder="max@mustermann.com"
           value={email}
           onChange={(e) => onEmailChange(e)}
         />
@@ -110,12 +155,13 @@ const SignUp = () => {
           onChange={(e) => onPasswordChange(e)}
         />
         <button
-          onClick={(e) => handleSubmit}
+          onClick={handleSubmit}
           disabled={buttonDisabled}
           className="main-button"
         >
           Jetzt Registrieren!
         </button>
+        <Link to={'/login'}>Hast schon einen Account?</Link>
         <span>{errorMessage}</span>
       </div>
     </div>

@@ -21,12 +21,8 @@ function App() {
   return (
     <div className="App">
       <Router>
-        {window.location.pathname.toLowerCase() == '/login' ||
-        window.location.pathname.toLowerCase() == '/signup' ? (
-          <Background />
-        ) : (
-          <Header></Header>
-        )}
+        <Header></Header>
+
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<Home />}></Route>

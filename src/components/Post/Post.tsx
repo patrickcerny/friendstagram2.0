@@ -1,12 +1,30 @@
 import './Post.scss';
 import { Post as PostProps } from '../../utils/models/post.model';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { isImage, isVideo } from '../../utils/functions/isFileType.function';
+import ReactPlayer from 'react-player';
 
 const Post = (props: PostProps) => {
   const navigate = useNavigate();
   const handleOnCommentClick = () => navigate(`/comment/${props.id_post}`);
   //TODO: implement full imnage Loading
-  const getPostImage = () => {};
+
+  const [file, setFile] = useState(
+    'https://www.bastiaanmulder.nl/wp-content/uploads/2013/11/dummy-image-square.jpg'
+  );
+  const [fileIsImage, setFileIsImage] = useState(true);
+
+  useEffect(() => {
+    if (isImage(props.file)) {
+      setFile(props.file);
+      setFileIsImage(true);
+    } else if (isVideo(props.file)) {
+      setFile(props.file);
+      setFileIsImage(false);
+    }
+    return () => {};
+  }, []);
   return (
     <div className="post-main">
       <div className="post-main__header">
@@ -20,7 +38,11 @@ const Post = (props: PostProps) => {
         <span className="post-main__header__date">{props.created_at}</span>
       </div>
       <div className="post-main__content">
-        <img alt={props.heading} src={props.image_small} />
+        {fileIsImage ? (
+          <img alt={props.heading} src={file} />
+        ) : (
+          <ReactPlayer url={props.file} controls />
+        )}
       </div>
       <div className="post-main__footer">
         <span className="post-main__footer__heading">{props.heading}</span>
