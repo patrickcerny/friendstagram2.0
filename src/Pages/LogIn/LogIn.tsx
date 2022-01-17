@@ -32,6 +32,7 @@ const LogIn = () => {
       email,
       password,
     };
+
     //get token
     try {
       const authenticationUser = await axios.post(
