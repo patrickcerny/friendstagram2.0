@@ -5,7 +5,10 @@ import './Settings.scss';
 const Settings = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    if (!checkToken()) navigate('/logIn');
+    checkToken().then((isLoggedIn) => {
+      if (!isLoggedIn) navigate('/logIn');
+    });
+
     return () => {};
   }, []);
   return (
@@ -41,7 +44,16 @@ const Settings = () => {
         </button>
       </div>
       <div className="main-settings__logout">
-        <button className="main-button">Ausloggen</button>
+        <button
+          className="main-button"
+          onClick={() => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            navigate('/logIn');
+          }}
+        >
+          Ausloggen
+        </button>
       </div>
     </div>
   );

@@ -67,7 +67,10 @@ const Comment = () => {
     setComments([...comments, { comment, created_at: '2020-01-01', user }]);
   };
   useEffect(() => {
-    if (!checkToken()) navigate('/logIn');
+    checkToken().then((isLoggedIn) => {
+      if (!isLoggedIn) navigate('/logIn');
+    });
+
     return () => {};
   }, []);
   return (

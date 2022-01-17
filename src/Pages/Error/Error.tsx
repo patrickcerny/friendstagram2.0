@@ -24,7 +24,9 @@ const ErrorPage = () => {
   useEffect(() => {
     if (errorCode === '404') setErrorPic(ConfusedGif);
 
-    if (!checkToken()) navigate('/logIn');
+    checkToken().then((isLoggedIn) => {
+      if (!isLoggedIn) navigate('/logIn');
+    });
 
     return () => {};
   }, [errorCode]);

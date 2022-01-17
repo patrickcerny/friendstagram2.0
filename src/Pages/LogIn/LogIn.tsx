@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { checkToken } from '../../utils/functions/checkToken.function';
 import './LogIn.scss';
 const LogIn = () => {
   const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -51,6 +52,13 @@ const LogIn = () => {
     }
     window.location.reload();
   };
+
+  useEffect(() => {
+    checkToken().then((isLoggedIn) => {
+      if (isLoggedIn) navigate('/');
+    });
+    return () => {};
+  }, []);
   return (
     <div className="main-login">
       <div className="main-login__form">

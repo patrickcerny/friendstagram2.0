@@ -1,9 +1,11 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { useEffect, useRef, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { checkToken } from '../../utils/functions/checkToken.function';
 import './SignUp.scss';
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const groupCodeInput = useRef(null as any);
 
   const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -110,6 +112,9 @@ const SignUp = () => {
         return setGroupCode(groupCode.substring(0, 16));
       setGroupCode(groupCode);
     }
+    checkToken().then((isLoggedIn) => {
+      if (isLoggedIn) navigate('/');
+    });
     return () => {};
   }, []);
   return (

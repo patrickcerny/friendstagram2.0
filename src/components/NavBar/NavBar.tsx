@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import AnimateHeight from 'react-animate-height';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './NavBar.scss';
 interface NavBarProps {}
 
 const NavBar = (props: NavBarProps) => {
   const [mobile, setMobile] = useState(window.innerWidth < 768);
   const [burgerClicked, setBurgerClicked] = useState(false);
-  const [display, setDisplay] = useState(true);
-
+  const [hideNavBar, setHideNavBar] = useState(false);
+  const location = useLocation();
   const handleBurgerClick = () => {
     setBurgerClicked(!burgerClicked);
   };
@@ -21,11 +21,12 @@ const NavBar = (props: NavBarProps) => {
       if (window.innerWidth > 768) setMobile(false);
       else if (window.innerWidth < 768) setMobile(true);
     });
+
     if (
-      window.location.pathname.toLowerCase() == '/login' ||
-      window.location.pathname.toLowerCase() == '/signup'
+      location.pathname.toLowerCase() === '/login' ||
+      location.pathname.toLowerCase() === '/signup'
     )
-      setDisplay(false);
+      setHideNavBar(true);
     return () => {
       window.removeEventListener('resize', () => {});
       window.removeEventListener('scroll', () => {});
@@ -36,7 +37,7 @@ const NavBar = (props: NavBarProps) => {
     <nav
       className="nav_container"
       style={
-        display ? (mobile ? {} : { height: '100px' }) : { display: 'none' }
+        hideNavBar ? { display: 'none' } : mobile ? {} : { height: '100px' }
       }
     >
       <div className="navBar">

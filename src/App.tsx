@@ -1,6 +1,11 @@
 import './App.scss';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from 'react-router-dom';
+import { lazy, Suspense, useEffect, useState } from 'react';
 
 //components
 import Header from './components/NavBar/NavBar';
