@@ -57,8 +57,9 @@ const LogIn = () => {
     checkToken().then((isLoggedIn) => {
       if (isLoggedIn) navigate('/');
     });
+
     return () => {};
-  }, []);
+  }, [navigate]);
   return (
     <div className="main-login">
       <div className="main-login__form">

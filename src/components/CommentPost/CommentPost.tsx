@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 
 const CommentPost = (props: CommentProps) => {
   useEffect(() => {
-    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
     return () => {};
   }, []);
 

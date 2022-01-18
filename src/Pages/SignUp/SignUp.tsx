@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { checkToken } from '../../utils/functions/checkToken.function';
@@ -15,7 +15,7 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const handleSubmit = async () => {
     setErrorMessage('');
@@ -116,7 +116,7 @@ const SignUp = () => {
       if (isLoggedIn) navigate('/');
     });
     return () => {};
-  }, []);
+  }, [searchParams, navigate]);
   return (
     <div className="main-signup">
       <div className="main-signup__form">

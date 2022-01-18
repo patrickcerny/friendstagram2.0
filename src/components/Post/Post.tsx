@@ -8,7 +8,6 @@ import ReactPlayer from 'react-player';
 const Post = (props: PostProps) => {
   const navigate = useNavigate();
   const handleOnCommentClick = () => navigate(`/comment/${props.id_post}`);
-  //TODO: implement full imnage Loading
 
   const [file, setFile] = useState(
     'https://www.bastiaanmulder.nl/wp-content/uploads/2013/11/dummy-image-square.jpg'
@@ -24,7 +23,7 @@ const Post = (props: PostProps) => {
       setFileIsImage(false);
     }
     return () => {};
-  }, []);
+  }, [props.file]);
   return (
     <div className="post-main">
       <div className="post-main__header">
@@ -49,25 +48,36 @@ const Post = (props: PostProps) => {
         <span className="post-main__footer__description">
           {props.description}
         </span>
-        <div
-          className="post-main__footer__comment"
-          onClick={handleOnCommentClick}
-        >
-          <span className="post-main__footer__comment__username">
-            {props.comments[props.comments.length - 1].user.username}:
-          </span>
-          <span className="post-main__footer__comment__content">
-            {props.comments[props.comments.length - 1].comment.length > 20
-              ? props.comments[props.comments.length - 1].comment.substring(
-                  0,
-                  20
-                ) + '...'
-              : props.comments[props.comments.length - 1].comment}
-          </span>
-          <span className="post-main__footer__comment__date">
-            {props.comments[props.comments.length - 1].created_at}
-          </span>
-        </div>
+        {props.comments.length ? (
+          <div
+            className="post-main__footer__comment"
+            onClick={handleOnCommentClick}
+          >
+            <span className="post-main__footer__comment__username">
+              {props.comments[props.comments.length - 1].user.username}:
+            </span>
+            <span className="post-main__footer__comment__content">
+              {props.comments[props.comments.length - 1].comment.length > 20
+                ? props.comments[props.comments.length - 1].comment.substring(
+                    0,
+                    20
+                  ) + '...'
+                : props.comments[props.comments.length - 1].comment}
+            </span>
+            <span className="post-main__footer__comment__date">
+              {props.comments[props.comments.length - 1].created_at}
+            </span>
+          </div>
+        ) : (
+          <div
+            className="post-main__footer__comment"
+            onClick={handleOnCommentClick}
+          >
+            <span className="post-main__footer__comment__username">
+              Noch keine Kommentare!
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );
