@@ -38,9 +38,12 @@ const Post = (props: PostProps) => {
       </div>
       <div className="post-main__content">
         {fileIsImage ? (
-          <img alt={props.heading} src={file} />
+          <img
+            alt={props.heading}
+            src={process.env.REACT_APP_API_FILES + file}
+          />
         ) : (
-          <ReactPlayer url={props.file} controls />
+          <ReactPlayer url={process.env.REACT_APP_API_FILES + file} controls />
         )}
       </div>
       <div className="post-main__footer">

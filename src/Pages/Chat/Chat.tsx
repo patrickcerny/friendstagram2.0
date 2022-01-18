@@ -5,66 +5,50 @@ import { ChatMessage as ChatMessageModel } from '../../utils/models/chatmessage.
 import ChatMessage from '../../components/ChatMessage/ChatMessage';
 import { checkToken } from '../../utils/functions/checkToken.function';
 import { useNavigate } from 'react-router-dom';
-
-const user = {
-  profile_picture: 'https://picsum.photos/200',
-  email: 'patrick.cerny04@gmail.com',
-  username: 'Patrick Cerny',
-};
+import axios from 'axios';
+import User from '../../utils/models/user.model';
 
 const Chat = () => {
   const navigate = useNavigate();
 
   const chatWindowRef = useRef<HTMLDivElement>(document.createElement('div'));
-  const [messages, setMessages] = useState<ChatMessageModel[]>([
-    {
-      content:
-        'Hallo, ich bin Patrick Cerny Hallo, ich bin Patrick Cerny Hallo, ich bin Patrick Cerny Hallo, ich bin Patrick Cerny Hallo, ich bin Patrick CernyHallo, ich bin Patrick Cerny Hallo, ich bin Patrick Cerny Hallo, ich bin Patrick Cerny Hallo, ich bin Patrick Cerny Hallo, ich bin Patrick CernyHallo, ich bin Patrick Cerny',
-      created_at: '2020-01-01',
-      sender: {
-        profile_picture: 'https://picsum.photos/200',
-        email: 'patrick.cerny04@gmail.com',
-        username: 'HundeSohn',
-      },
-    },
-    {
-      created_at: '2020-01-01',
-      content:
-        'Hallo, ich bin Patrick Cerny und bin ein Hund von Patrick Cerny',
-      sender: {
-        profile_picture: 'https://picsum.photos/200',
-        email: 'patrick.cerny04@gmail.com',
-        username: 'Patrick Cerny',
-      },
-    },
-    {
-      created_at: '2020-01-01',
-      content: 'Hallo, ich bin Patrick Cerny',
-      sender: {
-        profile_picture: 'https://picsum.photos/200',
-        email: 'patrick.cerny04@gmail.com',
-        username: 'HundeSohn',
-      },
-    },
-  ]);
+  const [messages, setMessages] = useState<ChatMessageModel[]>([]);
 
-  const onMessageSend = (message: string) => {
-    const date = new Date();
-    const today = date.toISOString().slice(0, 19).replace('T', ' ');
-    setMessages([
-      ...messages,
-      {
-        content: message,
-        created_at: today,
-        sender: user,
-      },
-    ]);
+  const rawUSer = JSON.parse(localStorage.getItem('user') + '');
+  if (!rawUSer) {
+    localStorage.clear();
+    navigate('/logIn');
+  }
+  const user = rawUSer as User;
+
+  const onMessageSend = async (message: string) => {
+    const newMessage = {
+      content: message,
+    };
+    try {
+      const data = await axios.post(
+        process.env.REACT_APP_API_URL + '/Chat/',
+        newMessage
+      );
+      const gottenMessage = data.data as ChatMessageModel;
+      console.log(gottenMessage);
+      setMessages([...messages, gottenMessage]);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   useEffect(() => {
     checkToken().then((isLoggedIn) => {
       if (!isLoggedIn) navigate('/logIn');
     });
 
+    const getMessages = async () => {
+      const data = await axios.get(process.env.REACT_APP_API_URL + '/Chat/');
+      const newMessages = data.data as ChatMessageModel[];
+      setMessages([...messages, ...newMessages]);
+    };
+    getMessages();
     return () => {};
   }, []);
   return (
